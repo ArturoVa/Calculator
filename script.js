@@ -111,5 +111,5 @@ buttonSubstract.addEventListener('click', () =>{
     substract();
 });
 
-buttonDel.addEventListener('click', () => newNumberDisplay.innerText=display.innerText.slice(0,-1));
+buttonDel.addEventListener('click', () => newNumberDisplay.innerText= newNumberDisplay.innerText.slice(0,-1));
 buttonClear.addEventListener('click', ()=>clear());
