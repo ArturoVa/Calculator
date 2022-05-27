@@ -24,7 +24,8 @@ const buttonDel  = document.getElementById('DEL');
 
 const display = document.querySelector('.display');
 const answCounter = document.getElementById('answ');
-const newNumberDisplay = document.getElementById('number');
+const newNumberSpan = document.getElementById('number');
+const signSpan = document.getElementById('sign');
 
 let answ=null;
 let newNumber =null;
@@ -33,49 +34,59 @@ let newNumber =null;
 function addValues(){
     if(display.innerText!==''){
         if(answ===null){
-            answ= newNumberDisplay.textContent*1;
-            newNumberDisplay.innerText='';
+            answ= newNumberSpan.textContent*1;
+            newNumberSpan.innerText='';
+            answCounter.innerText= answ; 
         }
         else{
-            newNumber = newNumberDisplay.textContent*1;
+            newNumber = newNumberSpan.textContent*1;
         }
     }
 }
 function clear(){
-    newNumberDisplay.innerText='';
+    newNumberSpan.innerText='';
     answCounter.innerText='';
+    signSpan.innerText='';
     answ = null;
     newNumber= null;
 }
 function newNumbertoNull(newNumber){
     answCounter.innerText = answ;
     newNumber=null; 
-    newNumberDisplay.innerText = ''
+    newNumberSpan.innerText = ''
 }
+//Operations
 function sum(){
+    addValues();
     if(newNumber!==null){
         answ += newNumber;
         newNumbertoNull(newNumber);
     }
 }
+
 function substract(){
+    addValues();
     if(newNumber!==null){
         answ = answ-newNumber;
         newNumbertoNull(newNumber);
     }
 }
+
 function multiply(){
+    addValues();
     if(newNumber!==null){
         answ *=newNumber;
         newNumbertoNull(newNumber);
     }
 }
+
 function division(){
+    addValues();
     if(newNumber!==null){
         if(newNumber===0){
             alert('invalid operation');
             newNumber = null;
-            newNumberDisplay.innerText = '';
+            newNumberSpan.innerText = '';
         }
         else{
         answ = answ/newNumber;
@@ -83,33 +94,69 @@ function division(){
     }
     }
 }
-button1.addEventListener('click', ()=>newNumberDisplay.textContent+='1');
-button2.addEventListener('click', ()=>newNumberDisplay.innerText+='2');
-button3.addEventListener('click', ()=>newNumberDisplay.innerText+='3');
-button4.addEventListener('click', ()=>newNumberDisplay.innerText+='4');
-button5.addEventListener('click', ()=>newNumberDisplay.innerText+='5');
-button6.addEventListener('click', ()=>newNumberDisplay.innerText+='6');
-button7.addEventListener('click', ()=>newNumberDisplay.innerText+='7');
-button8.addEventListener('click', ()=>newNumberDisplay.innerText+='8');
-button9.addEventListener('click', ()=>newNumberDisplay.innerText+='9');
-button0.addEventListener('click', ()=>newNumberDisplay.innerText+='0');
+
+function calculateValue(operationSign, operation){
+    
+    if(signSpan.textContent!==operationSign && answ!==null){
+        signSpan.textContent = operationSign;
+    }
+    else{
+        
+        operation();
+
+    }
+    signSpan.textContent = operationSign;
+}
+button1.addEventListener('click', ()=>newNumberSpan.innerText+='1');
+button2.addEventListener('click', ()=>newNumberSpan.innerText+='2');
+button3.addEventListener('click', ()=>newNumberSpan.innerText+='3');
+button4.addEventListener('click', ()=>newNumberSpan.innerText+='4');
+button5.addEventListener('click', ()=>newNumberSpan.innerText+='5');
+button6.addEventListener('click', ()=>newNumberSpan.innerText+='6');
+button7.addEventListener('click', ()=>newNumberSpan.innerText+='7');
+button8.addEventListener('click', ()=>newNumberSpan.innerText+='8');
+button9.addEventListener('click', ()=>newNumberSpan.innerText+='9');
+button0.addEventListener('click', ()=>newNumberSpan.innerText+='0');
 
 buttonMultiplication.addEventListener('click', () =>{
-    addValues();
-    multiply();
+
+    calculateValue('×',multiply);
+    
 });
 buttonDivision.addEventListener('click', () =>{
-    addValues();
-    division();
+
+    calculateValue('÷',division);
 });
 buttonSum.addEventListener('click', () =>{
-    addValues();
-    sum();
+
+    calculateValue('+',sum);
+    
 });
 buttonSubstract.addEventListener('click', () =>{
-    addValues();
-    substract();
+
+    calculateValue('-',substract);
+    
 });
 
-buttonDel.addEventListener('click', () => newNumberDisplay.innerText= newNumberDisplay.innerText.slice(0,-1));
+buttonDel.addEventListener('click', () => newNumberSpan.innerText= newNumberSpan.innerText.slice(0,-1));
 buttonClear.addEventListener('click', ()=>clear());
+
+buttonEqual.addEventListener('click',()=>{
+    if(signSpan.textContent === '×'){
+        multiply();
+        signSpan.textContent='';
+    }
+    if(signSpan.textContent === '+'){
+        sum();
+        signSpan.textContent='';
+    }
+    if(signSpan.textContent === '÷'){
+        division();
+        signSpan.textContent='';
+    }
+    if(signSpan.textContent === '-'){
+        substract();
+        signSpan.textContent='';
+
+    }
+})
