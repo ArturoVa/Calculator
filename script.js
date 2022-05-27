@@ -22,27 +22,58 @@ const buttonDot = document.getElementById('dot');
 const buttonClear = document.getElementById('CLEAR');
 const buttonDel  = document.getElementById('DEL');
 
-const display = document.getElementById('display');
+const display = document.querySelector('.display');
+const answCounter = document.getElementById('answ');
+const newNumberDisplay = document.getElementById('new-input');
+
+let answ=null;
+let newNumber =null;
 
 /* Functions  */
+function addValues(){
+    if(display.innerText!==''){
+        if(answ===null){
+            answ= newNumberDisplay.textContent*1;
+            newNumberDisplay.innerText='';
+        }
+        else{
+            newNumber = newNumberDisplay.textContent*1;
+        }
+    }
+}
+function sum(){
+    if(newNumber!==null){
+    answ += newNumber;
+    answCounter.innerText = answ;
+    newNumber=null; 
+    newNumberDisplay.innerText = ''
 
 
-button1.addEventListener('click', ()=>display.innerText+='1');
-button2.addEventListener('click', ()=>display.innerText+='2');
-button3.addEventListener('click', ()=>display.innerText+='3');
-button4.addEventListener('click', ()=>display.innerText+='4');
-button5.addEventListener('click', ()=>display.innerText+='5');
-button6.addEventListener('click', ()=>display.innerText+='6');
-button7.addEventListener('click', ()=>display.innerText+='7');
-button8.addEventListener('click', ()=>display.innerText+='8');
-button9.addEventListener('click', ()=>display.innerText+='9');
-button0.addEventListener('click', ()=>display.innerText+='0');
+    }
+}
+button1.addEventListener('click', ()=>newNumberDisplay.textContent+='1');
+button2.addEventListener('click', ()=>newNumberDisplay.innerText+='2');
+button3.addEventListener('click', ()=>newNumberDisplay.innerText+='3');
+button4.addEventListener('click', ()=>newNumberDisplay.innerText+='4');
+button5.addEventListener('click', ()=>newNumberDisplay.innerText+='5');
+button6.addEventListener('click', ()=>newNumberDisplay.innerText+='6');
+button7.addEventListener('click', ()=>newNumberDisplay.innerText+='7');
+button8.addEventListener('click', ()=>newNumberDisplay.innerText+='8');
+button9.addEventListener('click', ()=>newNumberDisplay.innerText+='9');
+button0.addEventListener('click', ()=>newNumberDisplay.innerText+='0');
 
 buttonMultiplication.addEventListener('click', () =>display.innerText+='×');
 buttonDivision.addEventListener('click', () =>display.innerText+='÷');
-buttonSum.addEventListener('click', () =>display.innerText+='+');
+buttonSum.addEventListener('click', () =>{
+    addValues();
+    sum();
+});
 buttonSubstract.addEventListener('click', () =>display.innerText+='-');
 
-buttonDel.addEventListener('click', () => display.innerText=display.innerText.slice(0,-1));
-buttonClear.addEventListener('click', ()=> display.textContent='');
-buttonLParenth.addEventListener('click', ()=> display.innerText='(');
+buttonDel.addEventListener('click', () => newNumberDisplay.innerText=display.innerText.slice(0,-1));
+buttonClear.addEventListener('click', ()=>{
+    newNumberDisplay.innerText='';
+    answCounter.innerText='';
+    answ = null;
+    newNumber= null;
+});
