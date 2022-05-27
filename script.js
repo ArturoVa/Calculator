@@ -24,7 +24,7 @@ const buttonDel  = document.getElementById('DEL');
 
 const display = document.querySelector('.display');
 const answCounter = document.getElementById('answ');
-const newNumberDisplay = document.getElementById('new-input');
+const newNumberDisplay = document.getElementById('number');
 
 let answ=null;
 let newNumber =null;
@@ -41,14 +41,46 @@ function addValues(){
         }
     }
 }
-function sum(){
-    if(newNumber!==null){
-    answ += newNumber;
+function clear(){
+    newNumberDisplay.innerText='';
+    answCounter.innerText='';
+    answ = null;
+    newNumber= null;
+}
+function newNumbertoNull(newNumber){
     answCounter.innerText = answ;
     newNumber=null; 
     newNumberDisplay.innerText = ''
-
-
+}
+function sum(){
+    if(newNumber!==null){
+        answ += newNumber;
+        newNumbertoNull(newNumber);
+    }
+}
+function substract(){
+    if(newNumber!==null){
+        answ = answ-newNumber;
+        newNumbertoNull(newNumber);
+    }
+}
+function multiply(){
+    if(newNumber!==null){
+        answ *=newNumber;
+        newNumbertoNull(newNumber);
+    }
+}
+function division(){
+    if(newNumber!==null){
+        if(newNumber===0){
+            alert('invalid operation');
+            newNumber = null;
+            newNumberDisplay.innerText = '';
+        }
+        else{
+        answ = answ/newNumber;
+        newNumbertoNull(newNumber);
+    }
     }
 }
 button1.addEventListener('click', ()=>newNumberDisplay.textContent+='1');
@@ -62,18 +94,22 @@ button8.addEventListener('click', ()=>newNumberDisplay.innerText+='8');
 button9.addEventListener('click', ()=>newNumberDisplay.innerText+='9');
 button0.addEventListener('click', ()=>newNumberDisplay.innerText+='0');
 
-buttonMultiplication.addEventListener('click', () =>display.innerText+='×');
-buttonDivision.addEventListener('click', () =>display.innerText+='÷');
+buttonMultiplication.addEventListener('click', () =>{
+    addValues();
+    multiply();
+});
+buttonDivision.addEventListener('click', () =>{
+    addValues();
+    division();
+});
 buttonSum.addEventListener('click', () =>{
     addValues();
     sum();
 });
-buttonSubstract.addEventListener('click', () =>display.innerText+='-');
+buttonSubstract.addEventListener('click', () =>{
+    addValues();
+    substract();
+});
 
 buttonDel.addEventListener('click', () => newNumberDisplay.innerText=display.innerText.slice(0,-1));
-buttonClear.addEventListener('click', ()=>{
-    newNumberDisplay.innerText='';
-    answCounter.innerText='';
-    answ = null;
-    newNumber= null;
-});
+buttonClear.addEventListener('click', ()=>clear());
