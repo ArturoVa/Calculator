@@ -74,7 +74,7 @@ function substract(){
 
 function multiply(){
     addValues();
-    if(newNumber!==null){
+    if(newNumber!==null && newNumberSpan.textContent!==''){
         answ *=newNumber;
         newNumbertoNull(newNumber);
     }
@@ -82,7 +82,7 @@ function multiply(){
 
 function division(){
     addValues();
-    if(newNumber!==null){
+    if(newNumber!==null && newNumberSpan.textContent!==''){
         if(newNumber===0){
             alert('invalid operation');
             newNumber = null;
@@ -138,7 +138,9 @@ buttonSubstract.addEventListener('click', () =>{
     
 });
 
-buttonDel.addEventListener('click', () => newNumberSpan.innerText= newNumberSpan.innerText.slice(0,-1));
+buttonDel.addEventListener('click', () => {
+    newNumberSpan.textContent === '' ? signSpan.innerText= '':newNumberSpan.innerText= newNumberSpan.innerText.slice(0,-1);
+});
 buttonClear.addEventListener('click', ()=>clear());
 
 buttonEqual.addEventListener('click',()=>{
