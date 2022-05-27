@@ -20,7 +20,7 @@ body{
 }
 
 /* || Display */
-#display{
+.display{
     margin: 10px;
     height: 120px;
     max-width: 100%;
