@@ -39,7 +39,7 @@ body{
 /* || Display */
 .display{
     margin: 10px;
-    height: 120px;
+    height: 140px;
     max-width: 100%;
     border:5px solid rgba(11, 134, 2, 0.66);
     background-color: rgb(0, 156, 0);
