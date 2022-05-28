@@ -57,56 +57,74 @@ function newNumbertoNull(newNumber){
 }
 //Operations
 function sum(){
-    addValues();
-    if(newNumber!==null){
-        answ += newNumber;
-        newNumbertoNull(newNumber);
+    if(!isNaN(newNumberSpan.textContent*1)){addValues();
+        if(newNumber!==null){
+            answ += newNumber;
+            newNumbertoNull(newNumber);
+        }
+    }    
+    else{
+        newNumberSpan.textContent='';
+        return alert('invalid input')
     }
 }
 
 function substract(){
-    addValues();
+    if(!isNaN(newNumberSpan.textContent*1)){addValues();
     if(newNumber!==null){
         answ = answ-newNumber;
         newNumbertoNull(newNumber);
     }
+    else{
+        newNumberSpan.textContent='';
+        return alert('invalid input')
+    }
+    }
 }
 
 function multiply(){
-    addValues();
+    if(!isNaN(newNumberSpan.textContent*1)){addValues();
     if(newNumber!==null && newNumberSpan.textContent!==''){
         answ *=newNumber;
         newNumbertoNull(newNumber);
+    }}
+    else{
+        newNumberSpan.textContent='';
+        return alert('invalid input')
     }
 }
 
 function division(){
-    addValues();
-    if(newNumber!==null && newNumberSpan.textContent!==''){
-        if(newNumber===0){
-            alert('invalid operation');
-            newNumber = null;
-            newNumberSpan.innerText = '';
-        }
-        else{
-        answ = answ/newNumber;
-        newNumbertoNull(newNumber);
-    }
+    if(!(isNaN(newNumberSpan.textContent*1))){addValues();
+        if(newNumber!==null && newNumberSpan.textContent!==''){
+            if(newNumber===0){
+                alert('????????? invalid operation division by 0');
+                newNumber = null;
+                newNumberSpan.innerText = '';
+            }
+            else{
+                answ = answ/newNumber;
+                newNumbertoNull(newNumber);
+            }
+    }    
+    }   
+    else{
+        newNumberSpan.textContent='';
+        return alert('invalid input')
     }
 }
 
-function calculateValue(operationSign, operation){
-    
+function calculateValue(operationSign, operation){ 
     if(signSpan.textContent!==operationSign && answ!==null){
         signSpan.textContent = operationSign;
     }
-    else{
-        
+    else{    
         operation();
-
     }
     signSpan.textContent = operationSign;
 }
+
+/** Button reactions  */
 button1.addEventListener('click', ()=>newNumberSpan.innerText+='1');
 button2.addEventListener('click', ()=>newNumberSpan.innerText+='2');
 button3.addEventListener('click', ()=>newNumberSpan.innerText+='3');
@@ -117,30 +135,14 @@ button7.addEventListener('click', ()=>newNumberSpan.innerText+='7');
 button8.addEventListener('click', ()=>newNumberSpan.innerText+='8');
 button9.addEventListener('click', ()=>newNumberSpan.innerText+='9');
 button0.addEventListener('click', ()=>newNumberSpan.innerText+='0');
+buttonDot.addEventListener('click', ()=>newNumberSpan.innerText+='.');
 
-buttonMultiplication.addEventListener('click', () =>{
+buttonMultiplication.addEventListener('click', () =>calculateValue('×',multiply));
+buttonDivision.addEventListener('click', () =>calculateValue('÷',division));
+buttonSum.addEventListener('click', () =>calculateValue('+',sum));
+buttonSubstract.addEventListener('click', () =>calculateValue('-',substract));
 
-    calculateValue('×',multiply);
-    
-});
-buttonDivision.addEventListener('click', () =>{
-
-    calculateValue('÷',division);
-});
-buttonSum.addEventListener('click', () =>{
-
-    calculateValue('+',sum);
-    
-});
-buttonSubstract.addEventListener('click', () =>{
-
-    calculateValue('-',substract);
-    
-});
-
-buttonDel.addEventListener('click', () => {
-    newNumberSpan.textContent === '' ? signSpan.innerText= '':newNumberSpan.innerText= newNumberSpan.innerText.slice(0,-1);
-});
+buttonDel.addEventListener('click', () => newNumberSpan.textContent === '' ? signSpan.innerText= '':newNumberSpan.innerText= newNumberSpan.innerText.slice(0,-1));
 buttonClear.addEventListener('click', ()=>clear());
 
 buttonEqual.addEventListener('click',()=>{
@@ -159,6 +161,20 @@ buttonEqual.addEventListener('click',()=>{
     if(signSpan.textContent === '-'){
         substract();
         signSpan.textContent='';
-
     }
 })
+/** Keyboard events */
+document.addEventListener('keydown', (e)=>{
+    
+    if(!isNaN(Number(e.key))){/** If the button clicked is a number, enter the number clicked*/
+        newNumberSpan.innerText+= Number(e.key) 
+    }
+    else if(e.key==='+'){buttonSum.click()}
+    else if(e.key==='-'){buttonSubstract.click()}
+    else if(e.key==='*'){buttonMultiplication.click()}
+    else if(e.key==='/'){buttonDivision.click()}
+    else if(e.key==='Enter'){buttonEqual.click()}
+    else if(e.key==='Backspace'){buttonDel.click()}
+    else if(e.key==='.'){buttonDot.click()}
+}
+)
